@@ -1,8 +1,9 @@
 angular.module("expensesModule")
-  .controller("viewExpenses", viewExpenses);
+  .controller("viewExpenses", viewExpenses)
+
 
 function viewExpenses($scope, $rootScope, $state, popupService,
-  $ionicLoading, $ionicModal, expenseService,$cordovaStatusbar) {
+  $ionicLoading, $ionicModal, expenseService, $cordovaStatusbar) {
   var expenseObj = this;
   expenseObj.query = "";
   expenseObj.showdelete = false;
@@ -16,7 +17,7 @@ function viewExpenses($scope, $rootScope, $state, popupService,
   expenseObj.toggleDelete = toggleDelete;
   expenseObj.toggleDetailView = toggleDetailView;
   expenseObj.modal = "";
-expenseObj.filteredList=[];
+  expenseObj.filteredList = [];
 
   var cleanUpFunc = $rootScope.$on("refreshList", function() {
     console.log("refreshing list......");
@@ -29,7 +30,7 @@ expenseObj.filteredList=[];
     cleanUpFunc();
   });
 
- function toggleDetailView() {}
+  function toggleDetailView() {}
 
   function toggleDelete() {
     expenseObj.showdelete = !expenseObj.showdelete;
@@ -47,16 +48,15 @@ expenseObj.filteredList=[];
           popupService.showAlert(result.title, result.text);
 
         });
-    } 
-    catch (e) {
+    } catch (e) {
       popupService.showAlert("Warning", "Catch in getExpenses");
-    }
-    finally{
-        $ionicLoading.hide();
+    } finally {
+      $ionicLoading.hide();
     }
   }
 
   function getExpenseData(expenseObject) {
+    
     $state.go("tabs.editexpense", { "editobj": JSON.stringify(expenseObject) });
   }
 

@@ -1,7 +1,7 @@
 angular.module("expensesModule", [])
   .factory("expenseService", expenseService);
 
-function expenseService(dbFactory, $q,utilsFactory) {
+function expenseService(dbFactory, $q, utilsFactory) {
   var expenseObj = {};
   expenseObj.getExpenseInfo = getExpenseInfo;
   expenseObj.getAllExpenses = getAllExpenses;
@@ -14,7 +14,8 @@ function expenseService(dbFactory, $q,utilsFactory) {
   expenseObj.monthExpense = monthExpense;
   expenseObj.monthwiseCategoryMAX = monthwiseCategoryMAX;
   expenseObj.monthwiseMAX = monthwiseMAX;
-
+  expenseObj.expensesInRange = expensesInRange;
+  expenseObj.expenseTotalInRange=expenseTotalInRange;
   //expenseObj.getAccountDetails = getAccountDetails;
   function monthExpense() {
     var query = "select sum(amount) as total from expenses group by category where  strftime('%m',editdate)=? && strftime('%Y',editdate)=?";
@@ -148,7 +149,8 @@ function expenseService(dbFactory, $q,utilsFactory) {
   function addExpense(expenseObj) {
     var query = "INSERT INTO expenses(  category , expensename, amount, comments, create_by ,created_date,lastEdited_by,lasteEdited_date) values(?,?,?,?,?,?,?,?)";
     var params = [expenseObj.category, expenseObj.expensename, expenseObj.amount, expenseObj.comments, "test",
-     expenseObj.created_date, "test", expenseObj.created_date];
+      expenseObj.created_date.getTime(), "test", expenseObj.created_date.getTime()
+    ];
 
 
     //lastEdited_by text , lasteEdited_date
@@ -185,8 +187,9 @@ function expenseService(dbFactory, $q,utilsFactory) {
 
   function updateExpense(expenseObj) {
     var query = "UPDATE expenses set  category=? , expensename=?, amount=?, comments=?, lastEdited_by=? ,lasteEdited_date=? where id=?";
-    var params = [expenseObj.category, expenseObj.expensename, expenseObj.amount, expenseObj.comments, "test", 
-     expenseObj.created_date, expenseObj.id];
+    var params = [expenseObj.category, expenseObj.expensename, expenseObj.amount, expenseObj.comments, "test",
+      expenseObj.created_date.getTime(), expenseObj.id
+    ];
     var deffered = $q.defer();
     var result = {};
     try {
@@ -244,5 +247,42 @@ function expenseService(dbFactory, $q,utilsFactory) {
     }
     return deffered.promise;
   }
+
+
+  function expenseTotalInRange(fromDate, toDate) {
+    var query = "select sum(amount) as total from expenses where lasteEdited_date between ? and ?";
+    var params = [fromDate, toDate];
+    var deffered = $q.defer();
+    try {
+      dbFactory.executesqlSelect(query, params)
+        .then(function(response) {
+          deffered.resolve(response.result[0].total);
+        });
+    } catch (e) {
+      deffered.reject(e);
+    }
+    return deffered.promise;
+  }
+
+  function expensesInRange(fromDate, toDate) {
+
+    var query = "select * from expenses where lasteEdited_date between ? and ?";
+    var params = [fromDate, toDate];
+    var deffered = $q.defer();
+    try {
+      dbFactory.executesqlSelect(query, params)
+        .then(function(result) {
+          deffered.resolve(result);
+        });
+    } catch (e) {
+      deffered.reject(e);
+    }
+    return deffered.promise;
+
+
+  }
+
+
+
   return expenseObj;
 }

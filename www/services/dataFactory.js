@@ -50,6 +50,8 @@ function dbFactory($q, popupService) {
         responseObj.result = resultArray;
         responseObj.status = "success";
         responseObj.length = rowsLength;
+
+        console.log("list::"+JSON.stringify(resultArray));
         deffered.resolve(responseObj);
 
       }, function(error) {

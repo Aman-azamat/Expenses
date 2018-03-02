@@ -22,34 +22,29 @@
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
   <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
-
- <link href="lib/ionic-datepicker/src/ionic-datepicker.styles.css" rel="stylesheet">
-
-<!--     <script src="lib/ionic-ion-header-shrink/ionic.headerShrink.js"></script> -->
+  <link href="lib/ionic-datepicker/src/ionic-datepicker.styles.css" rel="stylesheet">
+<!--   <script type="text/javascript" 
+   src="lib/angular-input-date/src/angular-input-date.js"></script> -->
+  <!--     <script src="lib/ionic-ion-header-shrink/ionic.headerShrink.js"></script> -->
   <!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
   <script src="ng-cordova.min.js"></script>
   <!-- your app's js -->
   <script src="app.js"></script>
- 
   <script src="services/popupService.js"></script>
   <script src="services/dataFactory.js"></script>
   <script src="services/ExpensesService.js"></script>
   <script src="services/utilsService.js"></script>
-   <script src="filters/dateFilter.js"></script>
+  <script src="services/DeviceCaptureService.js"></script>
+  <script src="filters/dateFilter.js"></script>
   <script src="controllers/login.js"></script>
   <script src="controllers/addExpenses.js"></script>
   <script src="controllers/dashboard.js"></script>
   <script src="controllers/viewExpense.js"></script>
-
 </head>
 
 <body ng-app="starter">
-
-  <ion-nav-view >
-   
-
-
+  <ion-nav-view>
   </ion-nav-view>
 </body>
 

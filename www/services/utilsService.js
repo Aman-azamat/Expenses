@@ -15,7 +15,7 @@ function utilsFactory($q, $cordovaDevice) {
     // if (month.length == 1) {
     //   month = "0" + "" + month;
     // }
-    dateString =  dateObj.getDate()+"-"+month + "-"+ dateObj.getFullYear()  ;
+    dateString = dateObj.getDate() + "-" + month + "-" + dateObj.getFullYear();
     return dateString;
   }
 
@@ -70,6 +70,9 @@ function utilsFactory($q, $cordovaDevice) {
     }
     return deferred.promise;
   }
+
+
+  
 
   return utils;
 }

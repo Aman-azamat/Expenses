@@ -1,11 +1,25 @@
 angular.module("LoginModule", [])
   .controller("loginCtrl", loginCtrl);
 
-function loginCtrl($state, $cordovaSQLite, utilsFactory,$cordovaDevice) {
+function loginCtrl($state, $cordovaSQLite, utilsFactory, $cordovaDevice, DeviceCapture) {
   var loginObj = this;
   loginObj.authenticateGoogleClient = authenticateGoogleClient;
   loginObj.authenticateFbClient = authenticateFbClient;
   loginObj.listAccounts = [];
+  loginObj.captureImage = captureImage;
+
+
+  // navigator.Backbutton.goBack(function() {
+  //   console.info('success');
+  // }, function() {
+  //   console.info('fail');
+  // });
+
+  function captureImage() {
+
+    DeviceCapture.captureImage();
+
+  }
 
   function authenticateGoogleClient() {
     $state.go("tabs.expenses");
@@ -30,7 +44,7 @@ function loginCtrl($state, $cordovaSQLite, utilsFactory,$cordovaDevice) {
 
       var version = $cordovaDevice.getVersion();
 
-console.log("device::"+device+"\n version:: "+version +"\n uuid:: "+uuid)
+      console.log("device::" + device + "\n version:: " + version + "\n uuid:: " + uuid)
 
     }, false);
   }

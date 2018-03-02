@@ -12,7 +12,7 @@ function tabsController($scope, $state) {
 }
 
 
-function addExpense(expenseService, $rootScope, popupService, $stateParams, $state, ionicDatePicker,utilsFactory) {
+function addExpense(expenseService, $rootScope, popupService, $stateParams, $state, ionicDatePicker, utilsFactory) {
   try {
     var expenseObj = this;
     expenseObj.id = "";
@@ -25,16 +25,14 @@ function addExpense(expenseService, $rootScope, popupService, $stateParams, $sta
     expenseObj.init = init;
     expenseObj.defaultcategory = {};
     //created_date text ,  lastEdited_by text , lasteEdited_date
-    // expenseObj.created_date = new Date();
-
-
+    expenseObj.created_date = new Date();
 
     expenseObj.datepickerObj = {
       callback: function(val) { //Mandatory 
         console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-        expenseObj.created_date = utilsFactory.stringToDate(val);
+        expenseObj.created_date = new Date(val);
       },
-      // disabledDates: [            //Optional 
+      //   disabledDates: [            //Optional 
       //   new Date(2016, 2, 16),
       //   new Date(2015, 3, 16),
       //   new Date(2015, 4, 16),
@@ -106,7 +104,11 @@ function addExpense(expenseService, $rootScope, popupService, $stateParams, $sta
         if ($stateParams.editobj != null) {
           var editObject = JSON.parse($stateParams.editobj);
           console.log("editObject:::" + JSON.stringify(editObject));
-          expenseObj.created_date=editObject.lasteEdited_date;
+          if (editObject.lasteEdited_date == "") {
+            expenseObj.created_date = new Date();
+          } else {
+            expenseObj.created_date = new Date(parseInt(editObject.lasteEdited_date));
+          }
           expenseObj.expensename = editObject.expensename;
           expenseObj.category = editObject.category;
           expenseObj.defaultcategory = { "name": editObject.category };
@@ -116,7 +118,7 @@ function addExpense(expenseService, $rootScope, popupService, $stateParams, $sta
 
         } else {
           clearData();
-          
+
         }
 
       })

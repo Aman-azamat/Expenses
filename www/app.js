@@ -7,12 +7,14 @@
 
 alert = function() {};
 // alert=console.log();
-angular.module('starter', ['ionic',  'ngCordova',
+angular.module('starter', ['ionic', 'ngCordova',
     'LoginModule',
     'dashModule',
     'expensesModule',
     'dbModule',
-    'popupModule','utilsModule','ionic-datepicker'
+    'popupModule', 'utilsModule',
+    // 'ngInputDate',
+    'ionic-datepicker'
   ])
 
   .run(function($state, $ionicPlatform, dbFactory, $ionicLoading, popupService, $cordovaStatusbar) {
@@ -52,71 +54,106 @@ angular.module('starter', ['ionic',  'ngCordova',
       }
     });
   })
-
-  .config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-      .state('login', {
-        url: '/login',
-        templateUrl: 'views/login.html',
-        controller: 'loginCtrl as ctrlObj',
-        cache: false
-      })
+  .directive('dateDirective', dateDirective)
 
 
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('login', {
+      url: '/login',
+      templateUrl: 'views/login.html',
+      controller: 'loginCtrl as ctrlObj',
+      cache: false
+    })
 
-      .state('tabs', {
-        url: "/tab",
-        abstract: true,
-        templateUrl: "views/tabs.html"
-      })
 
-      .state('tabs.dash', {
-        url: "/dashboard",
-        views: {
-          'tab-dash': {
-            templateUrl: "views/tabs-dashboard.html",
-            controller: 'dashTabCtrl as dash'
-          }
+
+    .state('tabs', {
+      url: "/tab",
+      abstract: true,
+      templateUrl: "views/tabs.html"
+    })
+
+    .state('tabs.dash', {
+      url: "/dashboard",
+      views: {
+        'tab-dash': {
+          templateUrl: "views/tabs-dashboard.html",
+          controller: 'dashTabCtrl as dashboardObj'
         }
-      })
+      }
+    })
 
-      .state('tabs.expenses', {
-        url: "/expenses",
-        cache: false,
-        views: {
-          'tab-addexpense': {
-            templateUrl: 'views/tabs-addExpense.html',
-            controller: 'addExpense as expenseObj'
-          }
+    .state('tabs.expenses', {
+      url: "/expenses",
+      cache: false,
+      views: {
+        'tab-addexpense': {
+          templateUrl: 'views/tabs-addExpense.html',
+          controller: 'addExpense as expenseObj'
         }
-      })
+      }
+    })
 
-      .state('tabs.editexpense', {
-        url: "/editexpense/:editobj",
-        cache: false,
-        views: {
-          'tab-addexpense': {
-            templateUrl: 'views/tabs-addExpense.html',
-            controller: 'addExpense as expenseObj'
-          }
+    .state('tabs.editexpense', {
+      url: "/editexpense/:editobj",
+      cache: false,
+      views: {
+        'tab-addexpense': {
+          templateUrl: 'views/tabs-addExpense.html',
+          controller: 'addExpense as expenseObj'
         }
-      })
+      }
+    })
 
 
-      .state('tabs.view', {
-        url: "/viewexpenses",
-        cache: true,
-        views: {
-          'tab-viewexpense': {
-            templateUrl: 'views/tabs-viewExpenses.html',
-            controller: 'viewExpenses as viewexpenseObj'
-          }
+    .state('tabs.view', {
+      url: "/viewexpenses",
+      cache: true,
+      views: {
+        'tab-viewexpense': {
+          templateUrl: 'views/tabs-viewExpenses.html',
+          controller: 'viewExpenses as viewexpenseObj'
         }
-      })
+      }
+    })
 
-    ;
+  ;
 
 
-    $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/login');
 
-  });
+});
+
+
+function dateDirective() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ngModel) {
+      var toView = function(val) {
+        if(val == undefined){
+          val=new Date().getTime();
+        }
+        var dateObj = new Date(val);
+        var month=dateObj.getMonth() + 1;
+        if(month.toString().length ==1){
+          month="0"+month.toString();
+        }
+        return dateObj.getDate() + "/" + month + "/" + dateObj.getFullYear();
+        //return (val || []).join(', ');
+      };
+
+      var toModel = function(val) {
+        return (val || '').split(',').map(function(v) {
+          return v.trim();
+        });
+      };
+
+      ngModel.$formatters.unshift(toView);
+      //ngModel.$parsers.unshift(toModel);
+    }
+  };
+}
+
+
+
