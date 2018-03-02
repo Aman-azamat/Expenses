@@ -1,0 +1,51 @@
+<ion-view name='tab-addexpense' view-title="Expenses" >
+  <ion-content  class='has-header'>
+ <form name='expenseForm'>
+<div class="list">
+ <label class="item item-select">
+ <span class="input-label">Category</span>
+ <select ng-model="expenseObj.category" 
+ ng-options="x.name for x in expenseObj.listCategories"  required>
+</select>
+
+</label>
+ <label class="item item-input item-stacked-label">
+ <span class="input-label">Expense</span>
+    <input type="text"  ng-model='expenseObj.expenseName'  required>
+  </label>
+  <label class="item item-input item-stacked-label">
+  <span class="input-label">Amount</span>
+    <input type="number"  ng-model='expenseObj.amount'  required>
+  </label>
+
+  <label class="item item-input item-stacked-label">
+  <span class="input-label">Comments</span>
+    <textarea ng-model='expenseObj.comments'  required></textarea>
+  </label>
+
+<div class="row">
+  
+  <div class="col">
+ <button class="button button-small button-balanced ion-checkmark-round button-align-right"
+  ng-disabled="expenseForm.$invalid"
+  ng-click='expenseObj.addExpense();' >
+  Submit
+</button>
+</div>
+
+<div class="col">
+<button class="button  button-small button-positive ion-close-round"
+ ng-click='expenseObj.clear();'
+>
+  Clear
+</button>
+</div>
+
+</div>
+
+
+
+</div>
+</form>
+</ion-content>
+</ion-view>

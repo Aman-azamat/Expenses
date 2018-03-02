@@ -1,0 +1,24 @@
+
+
+<ion-tabs class="tabs-positive tabs-icon-top " ng-controller="tabsController">
+
+  <ion-tab title="Dashboard" icon-on="ion-ios-filing"   
+  icon-off="ion-ios-filing-outline" href="#/tab/dashboard">
+   <ion-nav-view name="tab-dash">
+   </ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="Expenses" icon-on="ion-ios-clock" 
+  icon-off="ion-ios-clock-outline" ng-click='navigateToAdd();' >
+   <ion-nav-view name="tab-addexpense"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="view" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline" 
+   href="#/tab/viewexpenses" 
+      >
+   <ion-nav-view name="tab-viewexpense" ></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>
+
