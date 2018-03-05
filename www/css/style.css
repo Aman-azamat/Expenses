@@ -1,0 +1,69 @@
+/* Empty. Add your own CSS if you like */
+
+
+/*ion-content {
+  top: 0 !important;
+}*/
+
+.dashboard-box {
+  display: inline-block;
+  width: 100px;
+}
+
+
+.btn-color-white,
+.btn-color-white:hover {
+  color: #ffffff;
+}
+
+
+
+.button-round {
+  border-radius: 48%;
+}
+
+.button-align-right {
+  float: right;
+}
+
+.button-align-left {
+  float: left;
+}
+
+
+.button-align-right-fixed {
+  float: right;
+}
+
+.list-box {
+  display: inline-block;
+}
+
+.footer-box-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  overflow: hidden;
+  margin: 0 10px;
+  min-width: 30px;
+  height: 43px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 44px;
+}
+
+
+.col-align-right {
+  float: right;
+  display: inline-block;
+  text-overflow: ellipsis;
+}
+
+.col-align-left {
+  float: left;
+  display: inline-block;
+  text-overflow: ellipsis;
+}
